@@ -1,0 +1,28 @@
+org: robfairclough
+app: lambdatest
+# should be replaced in build step for live configs. probably need aws certs on (build?) server
+service: lambdatest
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+  stage: dev
+  region: eu-west-1
+  timeout: 30
+  memorySize: 512
+  # iamRoleStatements: 
+  #   - Effect: allow
+  #     Action: 
+        # - 
+
+functions:
+  pdfGenerator: 
+    handler: dist/index.handler
+    description: Generator for pdf
+    runtime: nodejs10.x
+    events: 
+      - http:
+          path: generate
+          method: get
+          cors: true
+          integration: LAMBDA
